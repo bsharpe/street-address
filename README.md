@@ -13,7 +13,7 @@ StreetAddress::US version 2+ is designed to work with ruby 2+.  It may work with
 ## Installation
 
 ```shell
-    gem install StreetAddress
+    gem install street_address
 ```
 
 then in your code
@@ -25,7 +25,7 @@ then in your code
 or from Gemfile
 
 ```ruby
-    gem 'StreetAddress', :require => "street_address"
+    gem 'street_address'
 ```
 
 ## Basic Usage
