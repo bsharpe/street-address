@@ -706,9 +706,9 @@ module StreetAddress
 
       \s+#{corner_regexp}\s+
 
-#          (?{ exists $_{$_} and $_{$_.1} = delete $_{$_} for (qw{prefix street type suffix})})
+#          (?{ exists $_{$_} && $_{$_.1} = delete $_{$_} for (qw{prefix street type suffix})})
       #{street_regexp}\W+
-#          (?{ exists $_{$_} and $_{$_.2} = delete $_{$_} for (qw{prefix street type suffix})})
+#          (?{ exists $_{$_} && $_{$_.2} = delete $_{$_} for (qw{prefix street type suffix})})
 
       #{place_regexp}
       \W*\z
@@ -853,6 +853,10 @@ module StreetAddress
         end
       end
 
+      def state=(value)
+        value = value.upcase if value.size <= 2
+        super(value)
+      end
 
       def full_postal_code
         return nil unless self.postal_code
@@ -864,16 +868,13 @@ module StreetAddress
         StreetAddress::US::FIPS_STATES[state]
       end
 
-
       def state_name
-        name = StreetAddress::US::STATE_NAMES[state] and name.capitalize
+        name = StreetAddress::US::STATE_NAMES[state] && name.capitalize
       end
-
 
       def intersection?
         !street2.nil?
       end
-
 
       def line1(s = "")
         parts = []
